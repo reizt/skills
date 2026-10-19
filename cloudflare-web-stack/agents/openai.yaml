@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cloudflare Web Stack"
+  short_description: "Bun・Hono・Cloudflare構成を一貫して適用"
+  default_prompt: "Use $cloudflare-web-stack to build this web application with my standard architecture."

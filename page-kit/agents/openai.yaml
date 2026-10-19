@@ -1,0 +1,4 @@
+interface:
+  display_name: "Page Kit Web Fetch"
+  short_description: "Web Searchで見つけたページ本文をMarkdown取得"
+  default_prompt: "Use $page-kit to search the web and fetch selected page bodies as Markdown."

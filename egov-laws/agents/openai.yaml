@@ -1,0 +1,4 @@
+interface:
+  display_name: "e-Gov Laws"
+  short_description: "Search and retrieve Japanese laws from e-Gov Law Search."
+  default_prompt: "e-Gov法令検索で法令名・キーワード・条文を調べて、出典URL付きで要約して"
