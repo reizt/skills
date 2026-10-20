@@ -3,4 +3,5 @@
 !/cloudflare-web-stack/
 !/page-kit/
 !/egov-laws/
+!/small-refactors/
 !.gitignore
