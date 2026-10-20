@@ -1,5 +1,5 @@
 ---
-name: small-refactor
+name: small-refactors
 description: Doing small refactors
 ---
 
