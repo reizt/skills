@@ -117,7 +117,7 @@
     return el('div',{class:'gv-answer'},group,el('div',{},heading,field));
   }
   function explainButton(onExplain) {
-    const b=button('説明','secondary',{'data-explain':true});
+    const b=button('説明','secondary',{'data-explain':true,title:'自由入力欄の内容も疑問点として送ります'});
     const result=el('span',{class:'gv-small',role:'status','aria-live':'polite'});
     b.addEventListener('click',async()=>{
       b.disabled=true;result.textContent='依頼中…';
@@ -221,7 +221,7 @@
       copy: text=>navigator.clipboard.writeText(text),
       // render.mjs --serve が配信したページだけが、相対パスの answers に受け口を持つ。
       send: location.protocol==='http:' ? text=>post('answers',text) : null,
-      explain: location.protocol==='http:' ? (themeId,questionId)=>post('explain',JSON.stringify({themeId,questionId})).then(reloadWhenServed) : null,
+      explain: location.protocol==='http:' ? (themeId,questionId,note)=>post('explain',JSON.stringify({themeId,questionId,note})).then(reloadWhenServed) : null,
     };
   }
 
@@ -241,7 +241,7 @@
         feedback.replaceChildren();
         refresh();
       };
-      const explain=io.explain&&(id=>io.explain(theme.id,id));
+      const explain=io.explain&&(id=>io.explain(theme.id,id,answers.get(theme.id,id).note));
       const list=questionList(theme.questions,id=>answers.get(theme.id,id),updateAnswer,explain);
       const missing=empty();
       const foot=footer(0,theme.questions.length,()=>{

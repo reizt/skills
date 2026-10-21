@@ -129,13 +129,15 @@ async function serve(path, options) {
     req.on('data', chunk => { body += chunk; if (body.length > 1e6) req.destroy(); });
     req.on('end', () => {
       if (route === 'answers') return finish(res, '--- 回答 ---\n' + body);
-      // セッションへ渡す文はページ由来の文字列でなく、HTML内の質問データから組み立てる。
+      // 質問の特定はページから届いた文字列でなく、HTML内の質問データで行う。疑問点だけはユーザーの入力として渡す。
       let request;
       try { request = JSON.parse(body); } catch {}
       const theme = data.themes.find(theme => theme.id === request?.themeId);
       const question = theme?.questions.find(question => question.id === request?.questionId);
       if (!question) return res.writeHead(400).end();
+      const note = typeof request.note === 'string' ? request.note.trim().slice(0, 2000) : '';
       finish(res, ['--- 説明依頼 ---', 'テーマ：' + theme.name, question.id + '. ' + question.title,
+        ...(note ? ['疑問点：', note] : []),
         '再開オプション：--port ' + server.address().port + ' --token ' + token].join('\n'));
     });
   });
