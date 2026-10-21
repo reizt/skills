@@ -1,5 +1,6 @@
 ---
 name: egov-laws
+disable-model-invocation: true
 description: Search, retrieve, and cite Japanese statutes using e-Gov Law Search and the e-Gov Law API Version 2. Use when Codex needs to look up Japanese laws, find a law by title or number, search law text by keyword, fetch current or historical articles/provisions, inspect revision history, download law text files, or provide citations/URLs from https://laws.e-gov.go.jp/.
 ---
 

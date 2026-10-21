@@ -1,5 +1,6 @@
 ---
 name: page-kit
+disable-model-invocation: true
 description: Combine standard Web Search with the local Page Kit API to research the web and fetch selected HTML page bodies as clean Markdown. Use when Codex needs current web research, article or documentation text, or better extraction from URLs found through search. Search discovers and ranks sources; Page Kit retrieves the full text of selected pages.
 ---
 

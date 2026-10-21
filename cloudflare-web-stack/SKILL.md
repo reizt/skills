@@ -1,5 +1,6 @@
 ---
 name: cloudflare-web-stack
+disable-model-invocation: true
 description: Apply the user's standard Bun, Hono, and Cloudflare TypeScript architecture when creating, restructuring, or extending web apps, APIs, routes, services, frontend pages, or project scaffolding. Use for new projects and compatible existing projects; preserve an established conflicting stack unless the user asks to migrate it.
 ---
 
