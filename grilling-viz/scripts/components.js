@@ -121,7 +121,7 @@
     const result=el('span',{class:'gv-small',role:'status','aria-live':'polite'});
     b.addEventListener('click',async()=>{
       b.disabled=true;result.textContent='依頼中…';
-      try { await onExplain(); result.textContent='説明を依頼しました。説明が届くとページが更新されます。'; }
+      try { await onExplain(); b.disabled=false; result.textContent='説明を依頼しました。説明はセッションの会話に届きます。'; }
       catch { b.disabled=false; result.textContent='依頼できませんでした。会話で質問してください。'; }
     });
     return el('div',{class:'gv-explain'},result,b);
@@ -206,12 +206,6 @@
     return false;
   }
   const post=(path,body)=>fetch(path,{method:'POST',body}).then(r=>{if(!r.ok)throw new Error(r.status);});
-  // 説明依頼でサーバーは一度終了し、説明を追記したHTMLで同じURLに戻ってくる。
-  function reloadWhenServed() {
-    const retry=()=>setTimeout(tick,1000);
-    const tick=()=>fetch(location.href,{cache:'no-store'}).then(r=>r.ok?location.reload():retry(),retry);
-    retry();
-  }
   function browserIO() {
     return {
       read: key=>localStorage.getItem(key),
@@ -221,7 +215,7 @@
       copy: text=>navigator.clipboard.writeText(text),
       // render.mjs --serve が配信したページだけが、相対パスの answers に受け口を持つ。
       send: location.protocol==='http:' ? text=>post('answers',text) : null,
-      explain: location.protocol==='http:' ? (themeId,questionId,note)=>post('explain',JSON.stringify({themeId,questionId,note})).then(reloadWhenServed) : null,
+      explain: location.protocol==='http:' ? (themeId,questionId,note)=>post('explain',JSON.stringify({themeId,questionId,note})) : null,
     };
   }
 

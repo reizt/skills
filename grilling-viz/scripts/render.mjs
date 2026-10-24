@@ -109,7 +109,7 @@ async function serve(path, options) {
   // 同じ文書は同じポートにし、ブラウザーの保存回答を起動のたびに復元できるようにする。
   let port = options.port ?? 20000 + parseInt(hash(data.documentId).slice(0, 8), 16) % 20000;
   // ほかのWebページからの送り込みを防ぐため、受け口をURL内の秘密のパスに置く。
-  // 説明依頼後の再起動では同じパスを引き継ぎ、開いているページをそのまま使えるようにする。
+  // 説明依頼後の再起動では同じパスを引き継ぎ、開いているページから続けて送信できるようにする。
   const token = options.token ?? randomUUID();
   const base = '/' + token + '/';
   const finish = (res, output) => res.end('ok', () => {
@@ -162,7 +162,7 @@ async function main(args) {
 
 新規生成では documentId を生成します。更新前に --inspect でデータとSHA256を取得してください。
 --serve は回答用HTMLを配信し、「セッションに送信」された回答か「説明」の依頼を標準出力に書いて終了します。
-説明依頼の出力にある --port と --token を付けて再起動すると、開いているページが同じURLのまま再読み込みされます。
+説明依頼の出力にある --port と --token を付けて再起動すると、開いているページから続けて送信できます。
 --catalog は見本テンプレートから、全コンポーネントと全トークンを埋め込んだHTMLを生成します。`);
     return;
   }
@@ -196,7 +196,8 @@ async function main(args) {
   try {
     const previous = await snapshot(output);
     if (previous ? previous.sha256 !== args[3] : args[3] !== undefined) {
-      throw new Error('既存HTMLの上書きには、一致する --if-match が必要です。--inspect で読み直してください。');
+      throw new Error('既存HTMLの上書きには、一致する --if-match が必要です。--inspect で読み直してください。' +
+        (previous ? '次のラウンドの質問なら、上書きせず別のファイル名で新規生成してください。' : ''));
     }
     let data;
     if (!catalog) {

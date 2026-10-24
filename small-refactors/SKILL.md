@@ -36,6 +36,12 @@ git rev-parse HEAD > "$(git rev-parse --git-dir)/small-refactors-ok"
 
 ## すぐ使えるおすすめリファクタ
 
-- `if (~~)` を説明変数に使って `if (isXxx)` にして、early return
+- `if (~~)` や三項演算子を説明変数作って `if (isXxx)` にして、early return
+- `items.flatMap(it => it.someValue != null ? [] : [it.someValue])` は `item.filter(it => it.someValue != null).map(it => it.someValue)`
+- 命名
+  - 副作用のない関数は「何を返却するのか」を名前にする
+    - booleanを返却する関数は `<is/has><主語><形容詞>(<主語>)` とか
+    - 冠詞を除いた英語の語順にすると綺麗になりやすい (`<形容詞><名詞><副詞>`とか)
+  - 値を変換しているものは `toXxx` にする
 - 関数のコードコメントは「〇〇を受け取って〇〇を返す関数」の1行にして、それ以上はコードから読み取れないことがある場合だけ補足
 - 関数の呼び出し元の知識がコメントに混じらないようにする。コメントも関心の分離が大事。

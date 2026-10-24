@@ -9,4 +9,8 @@
 !/ui-marker/
 !/grilling/
 !/grilling-viz/
+!/writing-principles/
+!/mermaid-to-image/
+!/pr-reader-guide/
+!/pr-comments/
 !.gitignore
